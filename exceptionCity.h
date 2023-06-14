@@ -4,11 +4,19 @@
 
 #ifndef UNTITLED116_EXCEPTIONCITY_H
 #define UNTITLED116_EXCEPTIONCITY_H
+#include "exception.h"
+#include <iostream>
 
 
-class exceptionCity {
+
+
+class exceptionCity: public Exception {
+private:
+    string city_name;
+public:
+    exceptionCity(const string &problem, const string city_name):Exception(problem),city_name(city_name){};
+    void handle() const;
 
 };
-
 
 #endif //UNTITLED116_EXCEPTIONCITY_H

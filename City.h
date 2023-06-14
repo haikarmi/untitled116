@@ -45,17 +45,19 @@ public:
 
 
 
-//    const string &getCityName() const {
-//        return city_name;
-//    }
-//
-//    int getCitySize() const {
-//        return city_size;
-//    }
-//
-//    const T &getCityId() const {
-//        return city_id;
-//    }
+    const string &getCityName() const {
+        return city_name;
+    }
+
+    int getCitySize() const {
+        return city_size;
+    }
+
+    const T &getCityId() const {
+        return city_id;
+    }
+
+    City();
 };
 
 template<typename T>
@@ -91,16 +93,24 @@ bool City<T>::operator!=(const City<T>& other) const {
 
 template<typename T>
 bool City<T>::operator==(const City<T> &other) const {
-    retern(this->city_id==other.city_id);
+    return(this->city_id==other.city_id);
 }
 template<class T>
 T City<T>::operator<(const City<T>& other) const {
-    if (city_id < other.charterCity) {
+    if (city_id < other.city_id) {
         return city_id;
     }
     else {
         return other.city_id;
     }
+}
+
+template<typename T>
+City<T>::City() {
+    this->city_name="ashdod";
+    this->city_id=00000;
+    this->city_size=0000;
+
 }
 
 

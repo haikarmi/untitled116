@@ -36,7 +36,7 @@ public:
         iteratorF(typename map<keyT, valueT>::iterator iterator) : it(iterator) {}
 
         iteratorF& operator++() {
-            ++it;
+            it++;
             return *this;
         }
 
@@ -64,7 +64,7 @@ public:
         iteratorS(typename map<valueT, keyT>::iterator iterator) : it(iterator) {}
 
         iteratorS& operator++() {
-            ++it;
+            it++;
             return *this;
         }
 
@@ -123,10 +123,8 @@ const bool BiMap<First,Second>::insert(const First& key, const Second& value)
                     return false;
             }
             MyMapSecond.erase(pair.second);
-            //revMap[pair.second] = nullptr;
             MyMapFirst[key] = value;
             MyMapSecond[value] = key;
-            //++sizeMap;
             return true;
         } else if (pair.second == value) {
             for (const auto& pair2: MyMapFirst) {
@@ -150,15 +148,13 @@ template <typename First,typename Second>
 bool BiMap<First,Second>::insert(const Second &key, const First &value) {
     for(const auto& pair : MyMapSecond) {
         if (pair.first == key) {
-            for (const auto& pair: MyMapSecond) {
+            for (const auto& pair: MyMapFirst) {
                 if (pair.second == value)
                     return false;
             }
             MyMapFirst.erase(pair.second);
-            //revMap[pair.second] = nullptr;
             MyMapSecond[key] = value;
             MyMapFirst[value] = key;
-            //++sizeMap;
             return true;
         } else if (pair.second == value) {
             for (const auto& pair: MyMapSecond) {
@@ -166,17 +162,14 @@ bool BiMap<First,Second>::insert(const Second &key, const First &value) {
                     return false;
             }
             MyMapSecond.erase(pair.first);
-            //Map[pair.first] = nullptr;
             MyMapFirst[value] = key;
             MyMapSecond[key] = value;
-            //++sizeMap;
             return true;
 
         }
     }
     MyMapSecond[key]=value;
     MyMapFirst[value]=key;
-    //++sizeMap;
     return true;
 }
 
