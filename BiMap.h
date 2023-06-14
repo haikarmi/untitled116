@@ -28,6 +28,7 @@ public:
     valueT& operator[](const keyT& key);
     keyT& operator[](const valueT& value);
     int size();
+    void print_map();
     class iteratorF {
     private:
         typename map<keyT, valueT>::iterator it;
@@ -232,6 +233,13 @@ int BiMap<keyT, valueT>::size() {
     }
     return count;
 
+}
+
+template<typename keyT, typename valueT>
+void BiMap<keyT, valueT>::print_map() {
+
+   cout<< MyMapFirst<<endl;
+   cout<<MyMapSecond<<endl;
 }
 
 #endif //UNTITLED116_BIMAP_H

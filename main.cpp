@@ -2,6 +2,7 @@
 # include <string>
 # include "BiMap.h"
 #include "City.h"
+#include <fstream>
 using namespace std;
 
 typedef BiMap<long, string> idNameBiMap;
@@ -10,7 +11,17 @@ int main(){
 
     BiMap <City<long>,string> bli;
     int choice;
-    cin>>choice;
+//    cin>>choice;
+fstream file;
+file.open("/Users/haikarmi/CLionProjects/untitled116/input.txt",ios::in);
+    if (!file) {
+        cout << "file not open" << endl;
+    }
+        else{
+        cout << "file open" << endl;
+        file>>choice;
+    }
+
     switch (choice) {
         case 1: {
             string name;
@@ -19,6 +30,7 @@ int main(){
             City<long> bla(name, 400, 33);
             bli.insert(bla, name);
             cout<<bla<<endl;
+//            bli.print_map();
 
 
         }
