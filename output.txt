@@ -1,4 +1,0 @@
-The city name is: Haifa
-The city size is: 60000
-The  city id is: 1121
-

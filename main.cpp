@@ -9,18 +9,20 @@
 bool check_name(const string &name);
 
 bool check_city_name(const string &name);
+bool check_men_not_city( BiMap<City<long>, string> biamap,string men_name);
+
 
 
 using namespace std;
 
-typedef BiMap<long, string> idNameBiMap;
+//typedef BiMap<long, string> idNameBiMap;
 
 int main() {
 
     BiMap<City<long>, string> biamap;
     int choice;
     fstream file_input;
-    file_input.open("/Users/haikarmi/CLionProjects/untitled116/input.txt", ios::in);
+    file_input.open("/Users/haikarmi/Desktop/input.txt", ios::in);
     if (!file_input) {
         cout << "file_input not open" << endl;
     } else {
@@ -32,7 +34,7 @@ int main() {
     switch (choice) {
         case 1: {
             fstream file_output;
-            file_output.open("/Users/haikarmi/CLionProjects/untitled116/output.txt", ios::out);
+            file_output.open("/Users/haikarmi/Desktop/output.txt", ios::out);
             if (!file_output) {
                 cout << "file_output not open" << endl;
             } else {
@@ -135,6 +137,34 @@ int main() {
             break;
         }
         case 5:{
+            fstream file_output;
+            file_output.open("/Users/haikarmi/Desktop/output.txt", ios::out);
+            if (!file_output) {
+                cout << "file_output not open" << endl;
+            } else {
+                cout << "The file_output is open for writing" << endl;
+            }
+            string men_name;
+
+            file_input >> men_name;
+            try {
+                check_name(men_name);
+            }
+            catch (Exception &execp) {
+                execp.handle();
+            }
+            try {
+                check_men_not_city(biamap,men_name);
+            }
+            catch (exceptionRep &ex_city){
+                ex_city.handle();
+            }
+              file_output << biamap[men_name] << endl;
+
+            file_input.close();
+            file_output.close();
+            break;
+
 
 
 
@@ -160,4 +190,10 @@ bool check_city_name(const string &name) {
             throw exceptionCity("the city name not good", name);
     }
     return true;
+}
+bool check_men_not_city( BiMap<City<long>, string> biamap,string men_name){
+    if(  biamap[men_name].getCityId()==00000)
+        throw exceptionRep("no city to men",men_name);
+
+
 }

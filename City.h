@@ -107,7 +107,7 @@ T City<T>::operator<(const City<T>& other) const {
 
 template<typename T>
 City<T>::City() {
-    this->city_name="ashdod";
+    this->city_name="no city";
     this->city_id=00000;
     this->city_size=0000;
 
