@@ -166,7 +166,41 @@ int main() {
             break;
 
 
+        }
+        case 8:{
+            fstream file_output;
+            file_output.open("/Users/haikarmi/Desktop/output.txt", ios::out);
+            if (!file_output) {
+                cout << "file_output not open" << endl;
+            } else {
+                cout << "The file_output is open for writing" << endl;
+            }
+            string men_name;
 
+            file_input >> men_name;
+            try {
+                check_name(men_name);
+            }
+            catch (Exception &execp) {
+                execp.handle();
+            }
+            try {
+                check_men_not_city(biamap,men_name);
+            }
+            catch (exceptionRep &ex_city){
+                ex_city.handle();
+            }
+            bool flag= false;
+            string what;
+            flag=biamap.search((biamap[men_name]),men_name);
+            if (flag== true) {
+                what="yes";
+            } else
+                 what="no";
+            file_output<<what;
+            file_input.close();
+            file_output.close();
+            break;
 
 
         }

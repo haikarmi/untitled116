@@ -32,9 +32,13 @@ public:
     keyT& operator[](const valueT& value);
     void removeById(const keyT & key);
     void removeById(const valueT& value);
+    bool isRepresentativeExist(const map<keyT,valueT> &  representa) const;
 
 
-    int size();
+
+
+
+        int size();
     void print_map();
     class iteratorF {
     private:
@@ -251,31 +255,15 @@ void BiMap<keyT, valueT>::print_map() {
    cout << map_first << endl;
    cout << second << endl;
 }
-template <typename First, typename Second>
-void BiMap<First, Second>::removeById(const First& key)
-{
-    auto it = map_first.find(key);
-    if (it == map_first.end()) {
-        throw exceptionCity("the men not in map ",key); // זריקת חריגה מסוג exceptionCity אם העיר לא נמצאת
-    }
 
-    const Second& value = it->second;
-    map_first.erase(it);
-    second.erase(value);
+
+template<typename First, typename Second>
+
+bool BiMap<First, Second>::isRepresentativeExist(const map<First,Second> &  representa )const {
+    auto it = map_first.find(representa);
+    return (it != map_first.end());
 }
 
-template <typename First, typename Second>
-void BiMap<First, Second>::removeById(const Second& key)
-{
-    auto it = second.find(key);
-    if (it == second.end()) {
-        throw exceptionCity("the city not in map",key); // זריקת חריגה מסוג exceptionCity אם העיר לא נמצאת
-    }
-
-    const First& value = it->second;
-    second.erase(it);
-    map_first.erase(value);
-}
 
 
 #endif //UNTITLED116_BIMAP_H
