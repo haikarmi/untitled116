@@ -167,6 +167,24 @@ int main() {
 
 
         }
+        case 6:{
+            fstream file_output;
+            file_output.open("/Users/haikarmi/Desktop/output.txt", ios::out);
+            if (!file_output) {
+                cout << "file_output not open" << endl;
+            } else {
+                cout << "The file_output is open for writing" << endl;
+            }
+            string men_name;
+            City<long> *city;
+            city=new City<long>("blibla city",0,0);
+            for (BiMap<City<long>,string>::iteratorS i =biamap.beginS();i !=biamap.endS();++i) {
+                if (*city==i.get_key())
+                    cout<<biamap[i.get_key()]<<endl;
+            }
+            break;
+
+        }
         case 8:{
             fstream file_output;
             file_output.open("/Users/haikarmi/Desktop/output.txt", ios::out);
@@ -204,6 +222,27 @@ int main() {
 
 
         }
+        case 9:{
+            fstream file_output;
+            file_output.open("/Users/haikarmi/Desktop/output.txt", ios::out);
+            if (!file_output) {
+                cout << "file_output not open" << endl;
+            } else {
+                cout << "The file_output is open for writing" << endl;
+            }
+
+           if( biamap.empty()== true)
+               file_output<<"empty"<<endl;
+           else{
+//               for (biamap.beginF() ; it != map_first.end(); ++it) {}
+
+
+               }
+
+            file_input.close();
+            file_output.close();
+            break;
+        }
     }
 
 
@@ -228,6 +267,7 @@ bool check_city_name(const string &name) {
 bool check_men_not_city( BiMap<City<long>, string> biamap,string men_name){
     if(  biamap[men_name].getCityId()==00000)
         throw exceptionRep("no city to men",men_name);
+    return true;
 
 
 }

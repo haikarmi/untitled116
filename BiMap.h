@@ -9,6 +9,7 @@
 #include <map>
 #include "exceptionRep.h"
 #include "exceptionCity.h"
+#include <fstream>
 
 using namespace std;
 
@@ -33,12 +34,17 @@ public:
     void removeById(const keyT & key);
     void removeById(const valueT& value);
     bool isRepresentativeExist(const map<keyT,valueT> &  representa) const;
+    bool empty();
+    void sortAndPrintRepresentatives();
+
+    void clear();
 
 
 
 
 
-        int size();
+
+    int size();
     void print_map();
     class iteratorF {
     private:
@@ -49,7 +55,6 @@ public:
 
         iteratorF& operator++() {
             it++;
-            it++;
 
             return *this;
         }
@@ -57,8 +62,8 @@ public:
         pair<const keyT, valueT>& operator*() const {
             return *it;
         }
-        pair<const keyT, valueT>& operator->() const {
-            return (it->second);
+        pair<const keyT, valueT>* operator->() const {
+            return &(*it);
         }
 
         bool operator==(const iteratorF& other) const {
@@ -67,6 +72,9 @@ public:
 
         bool operator!=(const iteratorF& other) const {
             return !(*this == other);
+        }
+        valueT &get_val(){
+            return it->first;
         }
     };
 
@@ -79,15 +87,14 @@ public:
 
         iteratorS& operator++() {
             it++;
-            it++;
             return *this;
         }
 
         pair<const valueT, keyT>& operator*() const {
             return *it;
         }
-        pair<const keyT, valueT>& operator->() const {
-            return (it->second);
+        pair<const valueT, keyT>* operator->() const {
+            return &(*it);
         }
 
         bool operator==(const iteratorS& other) const {
@@ -96,6 +103,9 @@ public:
 
         bool operator!=(const iteratorS& other) const {
             return !(*this == other);
+        }
+        keyT &get_key(){
+            return it->second;
         }
 
     };
@@ -115,6 +125,7 @@ public:
     iteratorS endS() {
         return iteratorS(second.end());
     }
+
 
 };
 
@@ -263,6 +274,36 @@ bool BiMap<First, Second>::isRepresentativeExist(const map<First,Second> &  repr
     auto it = map_first.find(representa);
     return (it != map_first.end());
 }
+template<typename keyT, typename valueT>
+bool BiMap<keyT, valueT>::empty() {
+    fstream file_output;
+    if (map_first.empty()) {
+        cout << "empty" << endl;
+        return true;
+    }
+    return false;
+
+
+
+}
+template<typename keyT, typename valueT>
+void BiMap<keyT, valueT>::clear() {
+    map_first.clear();
+    second.clear();
+}
+template<typename keyT, typename valueT>
+void BiMap<keyT, valueT>::sortAndPrintRepresentatives() {
+    if (second.empty()) {
+        cout << "empty" << endl;
+        return;
+    }
+
+    for (const auto& pair : second) {
+        cout << pair.first << endl;
+    }
+}
+
+
 
 
 
