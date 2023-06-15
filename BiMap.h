@@ -7,6 +7,9 @@
 
 #include <iostream>
 #include <map>
+#include "exceptionRep.h"
+#include "exceptionCity.h"
+
 using namespace std;
 
 template <typename keyT, typename valueT>
@@ -27,6 +30,10 @@ public:
     bool erase(const valueT& value);
     valueT& operator[](const keyT& key);
     keyT& operator[](const valueT& value);
+    void removeById(const keyT & key);
+    void removeById(const valueT& value);
+
+
     int size();
     void print_map();
     class iteratorF {
@@ -38,6 +45,8 @@ public:
 
         iteratorF& operator++() {
             it++;
+            it++;
+
             return *this;
         }
 
@@ -66,6 +75,7 @@ public:
 
         iteratorS& operator++() {
             it++;
+            it++;
             return *this;
         }
 
@@ -83,6 +93,7 @@ public:
         bool operator!=(const iteratorS& other) const {
             return !(*this == other);
         }
+
     };
 
     iteratorF beginF() {
@@ -100,6 +111,7 @@ public:
     iteratorS endS() {
         return iteratorS(second.end());
     }
+
 };
 
 
@@ -114,12 +126,12 @@ BiMap<keyT, valueT>::~BiMap() {
     map_first.clear();
     second.clear();
 }
-template <typename First,typename Second>
-const bool BiMap<First,Second>::insert(const First& key, const Second& value)
+template <typename First, typename Second>
+const bool BiMap<First, Second>::insert(const First& key, const Second& value)
 {
-    for(const auto& pair : map_first) {
+    for (const auto& pair : map_first) {
         if (pair.first == key) {
-            for (const auto& pair2: map_first) {
+            for (const auto& pair2 : map_first) {
                 if (pair2.second == value)
                     return false;
             }
@@ -128,7 +140,7 @@ const bool BiMap<First,Second>::insert(const First& key, const Second& value)
             second[value] = key;
             return true;
         } else if (pair.second == value) {
-            for (const auto& pair2: map_first) {
+            for (const auto& pair2 : map_first) {
                 if (pair2.first == key)
                     return false;
             }
@@ -136,21 +148,20 @@ const bool BiMap<First,Second>::insert(const First& key, const Second& value)
             second[value] = key;
             map_first[key] = value;
             return true;
-
         }
     }
-    map_first[key]=value;
-    second[value]=key;
+    map_first[key] = value;
+    second[value] = key;
     return true;
 }
 
 
-template <typename First,typename Second>
-bool BiMap<First,Second>::insert(const Second &key, const First &value) {
-    for(const auto& pair : second) {
+template <typename First, typename Second>
+bool BiMap<First, Second>::insert(const Second& key, const First& value) {
+    for (const auto& pair : second) {
         if (pair.first == key) {
-            for (const auto& pair: map_first) {
-                if (pair.second == value)
+            for (const auto& pair2 : map_first) {
+                if (pair2.first == value)
                     return false;
             }
             map_first.erase(pair.second);
@@ -158,19 +169,18 @@ bool BiMap<First,Second>::insert(const Second &key, const First &value) {
             map_first[value] = key;
             return true;
         } else if (pair.second == value) {
-            for (const auto& pair: second) {
-                if (pair.first == key)
+            for (const auto& pair2 : second) {
+                if (pair2.first == key)
                     return false;
             }
             second.erase(pair.first);
             map_first[value] = key;
             second[key] = value;
             return true;
-
         }
     }
-    second[key]=value;
-    map_first[value]=key;
+    second[key] = value;
+    map_first[value] = key;
     return true;
 }
 
@@ -216,7 +226,7 @@ bool BiMap<keyT, valueT>::erase(const valueT& value) {
 
 template<typename keyT, typename valueT>
 valueT& BiMap<keyT, valueT>::operator[](const keyT& key) {
-
+cout<<map_first[key]<<endl;//TODO CHECK
     return map_first[key];
 }
 
@@ -241,5 +251,31 @@ void BiMap<keyT, valueT>::print_map() {
    cout << map_first << endl;
    cout << second << endl;
 }
+template <typename First, typename Second>
+void BiMap<First, Second>::removeById(const First& key)
+{
+    auto it = map_first.find(key);
+    if (it == map_first.end()) {
+        throw exceptionCity("the men not in map ",key); // זריקת חריגה מסוג exceptionCity אם העיר לא נמצאת
+    }
+
+    const Second& value = it->second;
+    map_first.erase(it);
+    second.erase(value);
+}
+
+template <typename First, typename Second>
+void BiMap<First, Second>::removeById(const Second& key)
+{
+    auto it = second.find(key);
+    if (it == second.end()) {
+        throw exceptionCity("the city not in map",key); // זריקת חריגה מסוג exceptionCity אם העיר לא נמצאת
+    }
+
+    const First& value = it->second;
+    second.erase(it);
+    map_first.erase(value);
+}
+
 
 #endif //UNTITLED116_BIMAP_H

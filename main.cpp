@@ -36,7 +36,7 @@ int main() {
             if (!file_output) {
                 cout << "file_output not open" << endl;
             } else {
-                cout << "file_output open to red" << endl;
+                cout << " The file_output is open for writing" << endl;
             }
             string city_name;
             string men_name;
@@ -52,19 +52,92 @@ int main() {
             }
             file_input >> size_city;
             file_input >> men_name;
+            try {
+                check_name(men_name);
+            }
+            catch (Exception &execp) {
+                execp.handle();
+            }
 
 
             City<long> city(city_name, size_city, id_city);
+            if (biamap[men_name] == city) {
+                City<long> city_dif("difult", size_city, id_city);
+                city = city_dif;
+            }
+
 
             biamap.insert(city, men_name);
+//            cout<<biamap[men_name];//TODO CHECK
+
             file_output << city << endl;
             file_input.close();
             file_output.close();
-//           cout<< biamap.search(city,"fds");
+            break;
 
 
         }
         case 2: {
+            fstream file_output;
+            file_output.open("/Users/haikarmi/CLionProjects/untitled116/output.txt", ios::out);
+            if (!file_output) {
+                cout << "file_output not open" << endl;
+            } else {
+                cout << "The file_output is open for writing" << endl;
+            }
+            string city_name;
+            string men_name;
+            long id_city;
+            int size_city;
+            file_input >> men_name;
+            try {
+                check_name(men_name);
+            }
+            catch (Exception &execp) {
+                execp.handle();
+            }
+            file_input >> id_city;
+            file_input >> city_name;
+            try {
+                check_city_name(city_name);
+            }
+            catch (Exception &execp) {
+                execp.handle();
+            }
+            file_input >> size_city;
+            City<long> city(city_name, size_city, id_city);
+
+            biamap.insert(men_name, city);
+            file_output << city << endl;
+            file_input.close();
+            file_output.close();
+            break;
+
+
+        }
+        case 3: {
+            long id_city;
+            file_input >> id_city;
+
+
+        }
+        case 4: {
+            string men_name;
+            file_input >> men_name;
+            try {
+                check_name(men_name);
+            }
+            catch (Exception &execp) {
+                execp.handle();
+            }
+            biamap.erase(men_name);
+            file_input.close();
+            break;
+        }
+        case 5:{
+
+
+
 
         }
     }
