@@ -13,7 +13,7 @@ private:
     string name;
 public:
     exceptionRep(const string &problem, const string name): Exception(problem),name(name){};
-    void handle() const;
+    virtual void handle() const;
 
 };
 

@@ -3,93 +3,88 @@
 # include "BiMap.h"
 #include "City.h"
 #include <fstream>
+#include "exceptionCity.h"
+#include "exceptionRep.h"
+
+bool check_name(const string &name);
+
+bool check_city_name(const string &name);
+
+
 using namespace std;
 
 typedef BiMap<long, string> idNameBiMap;
 
-int main(){
+int main() {
 
-    BiMap <City<long>,string> bli;
+    BiMap<City<long>, string> biamap;
     int choice;
-//    cin>>choice;
-fstream file;
-file.open("/Users/haikarmi/CLionProjects/untitled116/input.txt",ios::in);
-    if (!file) {
-        cout << "file not open" << endl;
+    fstream file_input;
+    file_input.open("/Users/haikarmi/CLionProjects/untitled116/input.txt", ios::in);
+    if (!file_input) {
+        cout << "file_input not open" << endl;
+    } else {
+        cout << "file_input open" << endl;
+        file_input >> choice;
     }
-        else{
-        cout << "file open" << endl;
-        file>>choice;
-    }
+
 
     switch (choice) {
         case 1: {
-            string name;
-            cout << "enter city " << endl;
-            cin >> name;
-            City<long> bla(name, 400, 33);
-            bli.insert(bla, name);
-            cout<<bla<<endl;
-//            bli.print_map();
+            fstream file_output;
+            file_output.open("/Users/haikarmi/CLionProjects/untitled116/output.txt", ios::out);
+            if (!file_output) {
+                cout << "file_output not open" << endl;
+            } else {
+                cout << "file_output open to red" << endl;
+            }
+            string city_name;
+            string men_name;
+            long id_city;
+            int size_city;
+            file_input >> id_city;
+            file_input >> city_name;
+            try {
+                check_city_name(city_name);
+            }
+            catch (Exception &execp) {
+                execp.handle();
+            }
+            file_input >> size_city;
+            file_input >> men_name;
 
+
+            City<long> city(city_name, size_city, id_city);
+
+            biamap.insert(city, men_name);
+            file_output << city << endl;
+            file_input.close();
+            file_output.close();
+//           cout<< biamap.search(city,"fds");
+
+
+        }
+        case 2: {
 
         }
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    //A map which the first value is an integer (id number)
-//    // and the second is a string (name)
-//    idNameBiMap idName;
-//
-//    bool flag;
-//
-//    flag = idName.insert (777, "SevenSevenSeven");
-//    flag = idName.insert (333, "ThreeThreeThree");
-//
-//    cout<<idName[999]<<endl;				//
-//    cout<<idName[333]<<endl;				//ThreeThreeThree
-//    cout<<idName["SevenSevenSeven"]<<endl;		//777
-//
-//    flag = idName.insert ("ThreeThreeThree", 444);
-//    flag = idName.insert (777,"NewValue");
-//
-//    cout<<idName[333]<<endl;				//
-//    cout<<idName[444]<<endl;				//ThreeThreeThree
-//    cout<<idName["ThreeThreeThree"]<<endl;		//444
-//    cout<<idName[777]<<endl;				//NewValue
-//    cout<<idName.size()<<endl;				//2
-//
-//    flag = idName.insert ("TwoTwoTwo", 222);
-//    flag = idName.insert (222, "NewValue");		//illegal value
-//
-//    cout<<idName[222]<<endl;				//TwoTwoTwo
-//
-//
-//    flag = idName.erase ("NewValue");
-//    flag = idName.erase (777);
-//    flag = idName.erase (999);
-//    flag = idName.erase ("ThreeThreeThree");
-//
-//    cout<<idName.size()<<endl;				//1
-//
-//    idNameBiMap::iteratorF iterF = idName.beginF();
-//    ++iterF;
-//    if (iterF == idName.endF())
-//        cout<<"one element"<<endl;			//one element
-
     return 0;
+}
+
+bool check_name(const string &name) {
+    for (int i = 0; i < name.size(); ++i) {
+        if ((name[i] < 'a' || name[i] > 'z') && (name[i] < 'A' || name[i] > 'Z') && name[i] != '-')
+            throw exceptionRep("the name not good", name);
+    }
+    return true;
+}
+
+bool check_city_name(const string &name) {
+    for (int i = 0; i < name.size(); ++i) {
+        if ((name[i] < 'a' || name[i] > 'z') && (name[i] < 'A' || name[i] > 'Z') && name[i] != '-')
+            throw exceptionCity("the city name not good", name);
+    }
+    return true;
 }

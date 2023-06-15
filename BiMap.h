@@ -14,8 +14,8 @@ template <typename keyT, typename valueT>
 class BiMap {
 private:
 
-    map<keyT, valueT> MyMapFirst;
-    map<valueT, keyT> MyMapSecond;
+    map<keyT, valueT> map_first;
+    map<valueT, keyT> second;
 
 public:
     BiMap();
@@ -86,19 +86,19 @@ public:
     };
 
     iteratorF beginF() {
-        return iteratorF(MyMapFirst.begin());
+        return iteratorF(map_first.begin());
     }
 
     iteratorF endF() {
-        return iteratorF(MyMapFirst.end());
+        return iteratorF(map_first.end());
     }
 
     iteratorS beginS() {
-        return iteratorS(MyMapSecond.begin());
+        return iteratorS(second.begin());
     }
 
     iteratorS endS() {
-        return iteratorS(MyMapSecond.end());
+        return iteratorS(second.end());
     }
 };
 
@@ -111,78 +111,78 @@ BiMap<keyT, valueT>::BiMap() {
 
 template <typename keyT, typename valueT>
 BiMap<keyT, valueT>::~BiMap() {
-    MyMapFirst.clear();
-    MyMapSecond.clear();
+    map_first.clear();
+    second.clear();
 }
 template <typename First,typename Second>
 const bool BiMap<First,Second>::insert(const First& key, const Second& value)
 {
-    for(const auto& pair : MyMapFirst) {
+    for(const auto& pair : map_first) {
         if (pair.first == key) {
-            for (const auto& pair2: MyMapFirst) {
+            for (const auto& pair2: map_first) {
                 if (pair2.second == value)
                     return false;
             }
-            MyMapSecond.erase(pair.second);
-            MyMapFirst[key] = value;
-            MyMapSecond[value] = key;
+            second.erase(pair.second);
+            map_first[key] = value;
+            second[value] = key;
             return true;
         } else if (pair.second == value) {
-            for (const auto& pair2: MyMapFirst) {
+            for (const auto& pair2: map_first) {
                 if (pair2.first == key)
                     return false;
             }
-            MyMapFirst.erase(pair.first);
-            MyMapSecond[value] = key;
-            MyMapFirst[key] = value;
+            map_first.erase(pair.first);
+            second[value] = key;
+            map_first[key] = value;
             return true;
 
         }
     }
-    MyMapFirst[key]=value;
-    MyMapSecond[value]=key;
+    map_first[key]=value;
+    second[value]=key;
     return true;
 }
 
 
 template <typename First,typename Second>
 bool BiMap<First,Second>::insert(const Second &key, const First &value) {
-    for(const auto& pair : MyMapSecond) {
+    for(const auto& pair : second) {
         if (pair.first == key) {
-            for (const auto& pair: MyMapFirst) {
+            for (const auto& pair: map_first) {
                 if (pair.second == value)
                     return false;
             }
-            MyMapFirst.erase(pair.second);
-            MyMapSecond[key] = value;
-            MyMapFirst[value] = key;
+            map_first.erase(pair.second);
+            second[key] = value;
+            map_first[value] = key;
             return true;
         } else if (pair.second == value) {
-            for (const auto& pair: MyMapSecond) {
+            for (const auto& pair: second) {
                 if (pair.first == key)
                     return false;
             }
-            MyMapSecond.erase(pair.first);
-            MyMapFirst[value] = key;
-            MyMapSecond[key] = value;
+            second.erase(pair.first);
+            map_first[value] = key;
+            second[key] = value;
             return true;
 
         }
     }
-    MyMapSecond[key]=value;
-    MyMapFirst[value]=key;
+    second[key]=value;
+    map_first[value]=key;
     return true;
 }
 
 template <typename keyT, typename valueT>
 bool BiMap<keyT, valueT>::search(const keyT& key, const valueT& value) {
-    for (const auto& pair : MyMapFirst) {
+    for (const auto& pair : map_first) {
         if (pair.first == key && pair.second == value) {
             return true;
         }
     }
 
-    for (const auto& pair : MyMapSecond) {
+    for (const auto& pair : second) {
         if (pair.second == key && pair.first == value) {
             return true;
         }
@@ -192,11 +192,11 @@ bool BiMap<keyT, valueT>::search(const keyT& key, const valueT& value) {
 
 template<typename keyT, typename valueT>
 bool BiMap<keyT, valueT>::erase(const keyT& key) {
-    auto keyIt = MyMapFirst.find(key);
-    if (keyIt != MyMapFirst.end()) {
+    auto keyIt = map_first.find(key);
+    if (keyIt != map_first.end()) {
         valueT value = keyIt->second;
-        MyMapFirst.erase(keyIt);
-        MyMapSecond.erase(value);
+        map_first.erase(keyIt);
+        second.erase(value);
         return true;
     }
     return false;
@@ -204,11 +204,11 @@ bool BiMap<keyT, valueT>::erase(const keyT& key) {
 
 template<typename keyT, typename valueT>
 bool BiMap<keyT, valueT>::erase(const valueT& value) {
-    auto valueIt = MyMapSecond.find(value);
-    if (valueIt != MyMapSecond.end()) {
+    auto valueIt = second.find(value);
+    if (valueIt != second.end()) {
         keyT key = valueIt->second;
-        MyMapSecond.erase(valueIt);
-        MyMapFirst.erase(key);
+        second.erase(valueIt);
+        map_first.erase(key);
         return true;
     }
     return false;
@@ -217,18 +217,18 @@ bool BiMap<keyT, valueT>::erase(const valueT& value) {
 template<typename keyT, typename valueT>
 valueT& BiMap<keyT, valueT>::operator[](const keyT& key) {
 
-    return MyMapFirst[key];
+    return map_first[key];
 }
 
 template<typename keyT, typename valueT>
 keyT& BiMap<keyT, valueT>::operator[](const valueT& value) {
 
-    return MyMapSecond[value];
+    return second[value];
 }
 template<typename keyT, typename valueT>
 int BiMap<keyT, valueT>::size() {
     int count=0;
-    for (const auto& pair : MyMapSecond) {
+    for (const auto& pair : second) {
         ++count;
     }
     return count;
@@ -238,8 +238,8 @@ int BiMap<keyT, valueT>::size() {
 template<typename keyT, typename valueT>
 void BiMap<keyT, valueT>::print_map() {
 
-   cout<< MyMapFirst<<endl;
-   cout<<MyMapSecond<<endl;
+   cout << map_first << endl;
+   cout << second << endl;
 }
 
 #endif //UNTITLED116_BIMAP_H

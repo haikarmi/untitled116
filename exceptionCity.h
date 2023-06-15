@@ -15,7 +15,7 @@ private:
     string city_name;
 public:
     exceptionCity(const string &problem, const string city_name):Exception(problem),city_name(city_name){};
-    void handle() const;
+  virtual  void handle() const;
 
 };
 
