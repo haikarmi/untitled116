@@ -15,7 +15,7 @@ protected:
 public:
     Exception(const string &problem);
 
-    virtual void  handle()const =0; // abstract object
+    virtual void handle()const =0; // abstract object
 
 };
 

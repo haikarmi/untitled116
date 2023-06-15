@@ -27,19 +27,19 @@ int main() {
         cout << "file_input not open" << endl;
     } else {
         cout << "file_input open" << endl;
-        file_input >> choice;
+//        file_input >> choice;
     }
-
-
+    fstream file_output;
+    file_output.open("/Users/haikarmi/Desktop/output.txt", ios::out);
+    if (!file_output) {
+        cout << "file_output not open" << endl;
+    } else {
+        cout << " The file_output is open for writing" << endl;
+    }
+    do {
+        file_input>>choice;
     switch (choice) {
         case 1: {
-            fstream file_output;
-            file_output.open("/Users/haikarmi/Desktop/output.txt", ios::out);
-            if (!file_output) {
-                cout << "file_output not open" << endl;
-            } else {
-                cout << " The file_output is open for writing" << endl;
-            }
             string city_name;
             string men_name;
             long id_city;
@@ -62,9 +62,11 @@ int main() {
             }
 
 
-            City<long> city(city_name, size_city, id_city);
-            if (biamap[men_name] == city) {
-                City<long> city_dif("difult", size_city, id_city);
+                City<long> city(city_name, size_city, id_city);
+                if (biamap[men_name] == city) {
+
+
+              City<long> city_dif("difult", size_city, id_city);
                 city = city_dif;
             }
 
@@ -73,20 +75,11 @@ int main() {
 //            cout<<biamap[men_name];//TODO CHECK
 
             file_output << city << endl;
-            file_input.close();
-            file_output.close();
             break;
 
 
         }
         case 2: {
-            fstream file_output;
-            file_output.open("/Users/haikarmi/CLionProjects/untitled116/output.txt", ios::out);
-            if (!file_output) {
-                cout << "file_output not open" << endl;
-            } else {
-                cout << "The file_output is open for writing" << endl;
-            }
             string city_name;
             string men_name;
             long id_city;
@@ -111,15 +104,22 @@ int main() {
 
             biamap.insert(men_name, city);
             file_output << city << endl;
-            file_input.close();
-            file_output.close();
+
             break;
 
 
         }
         case 3: {
             long id_city;
+            string men;
+            City<long> *city;
+            city=new City<long>("blibla city",0,0);
             file_input >> id_city;
+            for (BiMap<City<long>,string>::iteratorS i =biamap.beginS();i !=biamap.endS();++i) {
+                if (*city == i.get_key())
+                    men = biamap[i.get_key()];
+            }
+            biamap.erase(men);
 
 
         }
@@ -133,17 +133,10 @@ int main() {
                 execp.handle();
             }
             biamap.erase(men_name);
-            file_input.close();
             break;
         }
         case 5:{
-            fstream file_output;
-            file_output.open("/Users/haikarmi/Desktop/output.txt", ios::out);
-            if (!file_output) {
-                cout << "file_output not open" << endl;
-            } else {
-                cout << "The file_output is open for writing" << endl;
-            }
+
             string men_name;
 
             file_input >> men_name;
@@ -161,38 +154,40 @@ int main() {
             }
               file_output << biamap[men_name] << endl;
 
-            file_input.close();
-            file_output.close();
+
             break;
 
 
         }
         case 6:{
-            fstream file_output;
-            file_output.open("/Users/haikarmi/Desktop/output.txt", ios::out);
-            if (!file_output) {
-                cout << "file_output not open" << endl;
-            } else {
-                cout << "The file_output is open for writing" << endl;
-            }
             string men_name;
             City<long> *city;
             city=new City<long>("blibla city",0,0);
+
             for (BiMap<City<long>,string>::iteratorS i =biamap.beginS();i !=biamap.endS();++i) {
                 if (*city==i.get_key())
-                    cout<<biamap[i.get_key()]<<endl;
+                    file_output<<biamap[i.get_key()]<<endl;
             }
             break;
 
         }
+        case 7:{
+            long id_city;
+            file_input >>id_city;
+            City<long> *city;
+            city=new City<long>("blibla city",0,0);
+            if (biamap.find(*city))
+                file_output <<"yes"<<endl;
+            else
+                file_output <<"no"<<endl;
+            break;
+
+
+
+
+        }
         case 8:{
-            fstream file_output;
-            file_output.open("/Users/haikarmi/Desktop/output.txt", ios::out);
-            if (!file_output) {
-                cout << "file_output not open" << endl;
-            } else {
-                cout << "The file_output is open for writing" << endl;
-            }
+
             string men_name;
 
             file_input >> men_name;
@@ -216,20 +211,12 @@ int main() {
             } else
                  what="no";
             file_output<<what;
-            file_input.close();
-            file_output.close();
+
             break;
 
 
         }
         case 9:{
-            fstream file_output;
-            file_output.open("/Users/haikarmi/Desktop/output.txt", ios::out);
-            if (!file_output) {
-                cout << "file_output not open" << endl;
-            } else {
-                cout << "The file_output is open for writing" << endl;
-            }
 
            if( biamap.empty()== true)
                file_output<<"empty"<<endl;
@@ -243,7 +230,21 @@ int main() {
             file_output.close();
             break;
         }
+        case 11:{
+            for (BiMap<City<long>,string>::iteratorS i =biamap.beginS();i !=biamap.endS();++i) {
+                biamap.erase(i.get_key());
+            }
+            break;
+
+            }
+        case 12:{
+            biamap.clear();
+            break;
+        }
     }
+    } while (choice!=12);
+    file_input.close();
+    file_output.close();
 
 
     return 0;
@@ -256,7 +257,6 @@ bool check_name(const string &name) {
     }
     return true;
 }
-
 bool check_city_name(const string &name) {
     for (int i = 0; i < name.size(); ++i) {
         if ((name[i] < 'a' || name[i] > 'z') && (name[i] < 'A' || name[i] > 'Z') && name[i] != '-')

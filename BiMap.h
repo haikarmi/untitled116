@@ -36,6 +36,8 @@ public:
     bool isRepresentativeExist(const map<keyT,valueT> &  representa) const;
     bool empty();
     void sortAndPrintRepresentatives();
+    bool find(const valueT second ){return second.count(second)!=0;}
+    bool find(const keyT first ){return map_first.count(first)!=0;}
 
     void clear();
 
@@ -55,6 +57,7 @@ public:
 
         iteratorF& operator++() {
             it++;
+            it++;
 
             return *this;
         }
@@ -71,7 +74,7 @@ public:
         }
 
         bool operator!=(const iteratorF& other) const {
-            return !(*this == other);
+            return it != other.it;
         }
         valueT &get_val(){
             return it->first;
@@ -102,7 +105,7 @@ public:
         }
 
         bool operator!=(const iteratorS& other) const {
-            return !(*this == other);
+            return it != other.it;
         }
         keyT &get_key(){
             return it->second;

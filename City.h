@@ -33,12 +33,9 @@ public:
         out << "The  city id is: " << city.city_id << std::endl;
         return out;
     }
-    friend std::istream& operator>>(std::istream& is, City<T>& city) {
-        std::cout << "Enter  name of the city: ";
+    friend std::istream& operator>>(std::istream& is, City<T>& city) {//TODO
         is >> city.city_name;
-        std::cout << "Enter  size of the city: ";
         is >> city.city_size;
-        std::cout << "Enter id of the city: ";
         is >> city.city_id;
         return is;
     }
