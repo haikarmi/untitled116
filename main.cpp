@@ -247,24 +247,11 @@ int main() {
 
             }
             case 9: {
-
-                if (biamap.empty() == true)
-                    file_output << "empty" << endl;
-                else {
-//               for (biamap.beginF() ; it != map_first.end(); ++it) {}
-                    string men_name;
-                    City<long> *city;
-                    city = new City<long>("blibla city", 0, 0);
-                    for (BiMap<City<long>, string>::iteratorS i = biamap.beginS(); i != biamap.endS(); ++i) {
-//                   if (*city==i.get_key())
-                        file_output << biamap[i.get_key()] << endl;
-
-
-                    }
-                }
-
-
+                biamap.short_city(file_output);
                 break;
+            }
+            case 10:{
+                biamap.short_rep(file_output);
             }
             case 11: {
                 for (BiMap<City<long>, string>::iteratorS i = biamap.beginS(); i != biamap.endS(); ++i) {

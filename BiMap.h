@@ -33,15 +33,14 @@ public:
     keyT& operator[](const valueT& value);
     void removeById(const keyT & key);
     void removeById(const valueT& value);
-    bool isRepresentativeExist(const map<keyT,valueT> &  representa) const;
     bool empty();
-    void sortAndPrintRepresentatives();
     bool find(const keyT first ){return map_first.count(first)!=0;  }
     bool find(const valueT &val){return second.count(val)!=0;}
     valueT & at(const keyT& key);
-
-
         void clear();
+        void short_city(fstream &output_file);
+        void short_rep(fstream &output_file);
+
 
 
 
@@ -270,40 +269,17 @@ void BiMap<keyT, valueT>::print_map() {
 }
 
 
-template<typename First, typename Second>
-
-bool BiMap<First, Second>::isRepresentativeExist(const map<First,Second> &  representa )const {
-    auto it = map_first.find(representa);
-    return (it != map_first.end());
-}
-template<typename keyT, typename valueT>
-bool BiMap<keyT, valueT>::empty() {
-    fstream file_output;
-    if (map_first.empty()) {
-        cout << "empty" << endl;
-        return true;
-    }
-    return false;
 
 
 
-}
+
+
 template<typename keyT, typename valueT>
 void BiMap<keyT, valueT>::clear() {
     map_first.clear();
     second.clear();
 }
-template<typename keyT, typename valueT>
-void BiMap<keyT, valueT>::sortAndPrintRepresentatives() {
-    if (second.empty()) {
-        cout << "empty" << endl;
-        return;
-    }
 
-    for (const auto& pair : second) {
-        cout << pair.first << endl;
-    }
-}
 template<typename keyT, typename valueT>
 valueT& BiMap<keyT, valueT>::at(const keyT& key) {
     typename map<keyT, valueT>::iterator it = map_first.find(key);
@@ -313,9 +289,31 @@ valueT& BiMap<keyT, valueT>::at(const keyT& key) {
     return it->second;
 }
 
+template<typename keyT, typename valueT>
+void BiMap<keyT, valueT>::short_city(fstream &output_file) {
+    if (map_first.empty()){
+        output_file<<"empty"<<endl;
+        return;
+    }
+    map<keyT,valueT> map;
+    for (const auto& pair: map_first) {
+        output_file<<pair.first<<endl;
+    }
 
+}
 
+template<typename keyT, typename valueT>
+void BiMap<keyT, valueT>::short_rep(fstream &output_file) {
+        if (second.empty()) {
+            output_file << "empty" << endl;
+            return;
+        }
+        map<keyT, valueT> map;
+        for (const auto &pair: second) {
+            output_file << pair.second << endl;
+        }
 
+    }
 
 
 
