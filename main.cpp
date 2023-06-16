@@ -179,7 +179,7 @@ int main() {
                     execp.handle();
                 }
                 try {
-                    check_men_not_city(biamap, men_name);
+                    check_name_not_found(biamap, men_name);
                 }
                 catch (exceptionRep &ex_city) {
                     file_output<<"error"<<endl;
