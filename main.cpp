@@ -145,6 +145,7 @@ int main() {
 
             }
             case 4: {
+                bool flag = false;
                 string men_name;
                 file_input >> men_name;
                 try {
@@ -156,13 +157,14 @@ int main() {
                     execp.handle();
                 }
                 try {
-                    check_name_not_found(biamap,men_name);
+                    flag = check_name_not_found(biamap,men_name);
                 }
                 catch  (Exception &execp) {
                     file_output<<"error"<<endl;
 
                     execp.handle();
                 }
+                if(flag)
                     biamap.erase(men_name);
                 break;
             }
@@ -231,23 +233,14 @@ int main() {
                     file_output<<"error"<<endl;
                     execp.handle();
                 }
-//                try {
-//                    check_men_not_city(biamap, men_name);
-//                }
-//                catch (exceptionRep &ex_city) {
-//                    file_output<<"error"<<endl;
-//
-//                    ex_city.handle();
-//                }
-                bool flag = false;
-                string what;
-                flag = biamap.search((biamap[men_name]), men_name);
-                if (flag == true) {
-                    what = "yes";
+                if (biamap.find(men_name)){
+                    file_output<<"yes"<<endl;
+                }
+                else{
+                    file_output<<"no"<<endl;
 
-                } else
-                    what = "no";
-                file_output << what;
+                }
+
 
                 break;
 
@@ -282,8 +275,16 @@ int main() {
             }
             case 12: {
                 biamap.clear();
+                file_output<<" the project closed "<<endl;
+
+
                 break;
+
             }
+            default:{
+                file_output<<"Not available"<<endl;
+            }
+
         }
     } while (choice != 12);
     file_input.close();

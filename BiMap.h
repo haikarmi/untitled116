@@ -222,11 +222,9 @@ bool BiMap<keyT, valueT>::search(const keyT& key, const valueT& value) {
 
 template<typename keyT, typename valueT>
 bool BiMap<keyT, valueT>::erase(const keyT& key) {
-    auto keyIt = map_first.find(key);
-    if (keyIt != map_first.end()) {
-        valueT value = keyIt->second;
-        map_first.erase(keyIt);
-        second.erase(value);
+    if (map_first.count(key)!=0){
+        second.erase(map_first[key]);
+        map_first.erase(key);
         return true;
     }
     return false;
@@ -234,11 +232,10 @@ bool BiMap<keyT, valueT>::erase(const keyT& key) {
 
 template<typename keyT, typename valueT>
 bool BiMap<keyT, valueT>::erase(const valueT& value) {
-    auto valueIt = second.find(value);
-    if (valueIt != second.end()) {
-        keyT key = valueIt->second;
-        second.erase(valueIt);
-        map_first.erase(key);
+
+    if (second.count(value)!=0){
+        map_first.erase(second[value]);
+        second.erase(value);
         return true;
     }
     return false;
