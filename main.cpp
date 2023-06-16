@@ -201,7 +201,7 @@ int main() {
 
                 for (BiMap<City<long>, string>::iteratorS i = biamap.beginS(); i != biamap.endS(); ++i) {
                     if (*city == i.get_key())
-                        file_output << biamap[i.get_key()] << endl;
+                        file_output << biamap[i.get_key()] << endl;//todo check
                 }
                 break;
 
@@ -231,19 +231,20 @@ int main() {
                     file_output<<"error"<<endl;
                     execp.handle();
                 }
-                try {
-                    check_men_not_city(biamap, men_name);
-                }
-                catch (exceptionRep &ex_city) {
-                    file_output<<"error"<<endl;
-
-                    ex_city.handle();
-                }
+//                try {
+//                    check_men_not_city(biamap, men_name);
+//                }
+//                catch (exceptionRep &ex_city) {
+//                    file_output<<"error"<<endl;
+//
+//                    ex_city.handle();
+//                }
                 bool flag = false;
                 string what;
                 flag = biamap.search((biamap[men_name]), men_name);
                 if (flag == true) {
                     what = "yes";
+
                 } else
                     what = "no";
                 file_output << what;
