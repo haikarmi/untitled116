@@ -36,10 +36,12 @@ public:
     bool isRepresentativeExist(const map<keyT,valueT> &  representa) const;
     bool empty();
     void sortAndPrintRepresentatives();
-    bool find(const valueT second ){return second.count(second)!=0;}
-    bool find(const keyT first ){return map_first.count(first)!=0;}
+    bool find(const keyT first ){return map_first.count(first)!=0;  }
+    bool find(const valueT &val){return second.count(val)!=0;}
+    valueT & at(const keyT& key);
 
-    void clear();
+
+        void clear();
 
 
 
@@ -244,7 +246,7 @@ bool BiMap<keyT, valueT>::erase(const valueT& value) {
 
 template<typename keyT, typename valueT>
 valueT& BiMap<keyT, valueT>::operator[](const keyT& key) {
-cout<<map_first[key]<<endl;//TODO CHECK
+//cout<<map_first[key]<<endl;//TODO CHECK
     return map_first[key];
 }
 
@@ -305,6 +307,17 @@ void BiMap<keyT, valueT>::sortAndPrintRepresentatives() {
         cout << pair.first << endl;
     }
 }
+template<typename keyT, typename valueT>
+valueT& BiMap<keyT, valueT>::at(const keyT& key) {
+    typename map<keyT, valueT>::iterator it = map_first.find(key);
+//    if (it == map_first.end()) {
+//        throw std::out_of_range("Key not found in BiMap");
+//    }
+    return it->second;
+}
+
+
+
 
 
 
