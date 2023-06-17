@@ -23,8 +23,7 @@ bool check_name_found(BiMap<City<long>, string> & biamap,const string &men_name)
 
 using namespace std;
 
-//typedef BiMap<long, string> idNameBiMap;
-
+typedef enum {Add_city_to_map=1, Add_name_to_map, erase_city, Erase_name, Get_city,Get_name, check_city, check_men, sort_City, sort_Name, Clean, Exit}menu;
 int main() {
 
     BiMap<City<long>, string> biamap;
@@ -46,7 +45,7 @@ int main() {
     do {
         file_input >> choice;
         switch (choice) {
-            case 1: {
+            case Add_city_to_map: {
                 string city_name;
                 string men_name;
                 long id_city;
@@ -99,13 +98,7 @@ int main() {
                     break;
 
                 }
-
-
-
-
-
-
-            case 2: {
+            case Add_name_to_map: {
                 string city_name;
                 string men_name;
                 long id_city;
@@ -157,12 +150,7 @@ int main() {
 
                 break;
             }
-
-
-
-
-
-            case 3: {
+            case erase_city: {
                 long id_city;
                 string name;
                 City<long> *city;
@@ -184,7 +172,7 @@ int main() {
 
 
             }
-            case 4: {
+            case Erase_name: {
                 bool flag = false;
                 string men_name;
                 file_input >> men_name;
@@ -208,8 +196,8 @@ int main() {
                     biamap.erase(men_name);
                 break;
             }
-            case 5: {
-
+            case Get_city: {
+bool flag= false;
                 string men_name;
 
                 file_input >> men_name;
@@ -221,20 +209,20 @@ int main() {
                     execp.handle();
                 }
                 try {
-                    check_name_not_found(biamap, men_name);
+                   flag= check_name_not_found(biamap, men_name);
                 }
                 catch (exceptionRep &ex_city) {
                     file_output << "error" << endl;
                     ex_city.handle();
+                }if(flag) {
+                    file_output << biamap[men_name] << endl;
                 }
-                file_output << biamap[men_name] << endl;
-
 
                 break;
 
 
             }
-            case 6: {
+            case Get_name: {
                 long id_city;
                 City<long> *city;
                 file_input >> id_city;
@@ -248,7 +236,7 @@ int main() {
                 break;
 
             }
-            case 7: {
+            case check_city: {
                 long id_city;
                 file_input >> id_city;
                 City<long> *city;
@@ -261,7 +249,7 @@ int main() {
 
 
             }
-            case 8: {
+            case check_men: {
 
                 string men_name;
 
@@ -285,22 +273,19 @@ int main() {
 
 
             }
-            case 9: {
+            case sort_City: {
                 biamap.short_city(file_output);
                 break;
             }
-            case 10: {
+            case sort_Name: {
                 biamap.short_rep(file_output);
                 break;
             }
-            case 11: {
+            case Clean: {
                     biamap.clear();
                 break;
                 }
-
-
-
-            case 12: {
+            case Exit: {
                 biamap.clear();
                 file_output << " the project closed " << endl;
 
