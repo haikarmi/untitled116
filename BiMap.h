@@ -46,7 +46,6 @@ public:
 
 
 
-
     int size();
     void print_map();
     class iteratorF {
@@ -58,7 +57,7 @@ public:
 
         iteratorF& operator++() {
             it++;
-            it++;
+//            it++;
 
             return *this;
         }
@@ -221,6 +220,7 @@ bool BiMap<keyT, valueT>::search(const keyT& key, const valueT& value) {
 
 template<typename keyT, typename valueT>
 bool BiMap<keyT, valueT>::erase(const keyT& key) {
+
     if (map_first.count(key)!=0){
         second.erase(map_first[key]);
         map_first.erase(key);
@@ -235,22 +235,32 @@ bool BiMap<keyT, valueT>::erase(const valueT& value) {
     if (second.count(value)!=0){
         map_first.erase(second[value]);
         second.erase(value);
-        return true;
+            return true;
     }
     return false;
 }
 
 template<typename keyT, typename valueT>
 valueT& BiMap<keyT, valueT>::operator[](const keyT& key) {
-//cout<<map_first[key]<<endl;//TODO CHECK
+    if (map_first.count(key)==0){
+        valueT* temp;
+        temp=new valueT(map_first[key]);
+        map_first.erase(key);
+        return *temp;
+    }
     return map_first[key];
 }
 
 template<typename keyT, typename valueT>
 keyT& BiMap<keyT, valueT>::operator[](const valueT& value) {
-
+    if (second.count(value)==0){
+        keyT* temp;
+        temp= new keyT(second[value]);
+        return * temp;
+    }
     return second[value];
 }
+
 template<typename keyT, typename valueT>
 int BiMap<keyT, valueT>::size() {
     int count=0;
@@ -309,7 +319,7 @@ void BiMap<keyT, valueT>::short_rep(fstream &output_file) {
             return;
         }
         map<keyT, valueT> map;
-        for (const auto &pair: second) {
+        for (const auto &pair: map_first) {
             output_file << pair.second << endl;
         }
 

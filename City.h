@@ -25,12 +25,11 @@ public:
     City &operator=(const City &other);
     bool operator!=(const City<T>& other) const;
     bool operator== (const City<T>&other)const;
-    T operator<(const City<T>& other) const;
+    bool operator<(const City<T>& other) const;
 
     friend std::ostream& operator<<(std::ostream& out, const City<T>& city) {
-        out << "The city name is: " << city.city_name << std::endl;
-        out << "The city size is: " << city.city_size << std::endl;
-        out << "The  city id is: " << city.city_id << std::endl;
+        out << '[' << city.city_id << "] "<< city.city_name << " "<<city.city_size<< " " <<endl;
+
         return out;
     }
     friend std::istream& operator>>(std::istream& is, City<T>& city) {//TODO
@@ -93,13 +92,8 @@ bool City<T>::operator==(const City<T> &other) const {
     return(this->city_id==other.city_id);
 }
 template<class T>
-T City<T>::operator<(const City<T>& other) const {
-    if (city_id < other.city_id) {
-        return city_id;
-    }
-    else {
-        return other.city_id;
-    }
+bool City<T>::operator<(const City<T>& other) const {
+    return this->city_id < other.city_id;
 }
 
 template<typename T>

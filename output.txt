@@ -1,0 +1,25 @@
+error
+[1121] Haifa 60000 
+
+error
+error
+[1121] Haifa 60000 
+
+[7766] Metulla 2500 
+
+[7887] Bat-Yam 2000 
+
+Ben-Shlomo
+Sharon
+Shimoni
+[7766] Metulla 2500 
+
+error
+[0] no city 0 
+
+yes the id city is linked to the city on the map
+no the name not in map
+Sharon
+Shimoni
+empty
+ the project closed 
