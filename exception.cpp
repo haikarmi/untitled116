@@ -4,6 +4,6 @@
 
 #include "exception.h"
 
-Exception::Exception(const string &problem) {
-    this->problem = problem;
+Exception::Exception(const string& problem) {
+    this->problem = problem;  // Assign the provided problem to the problem member variable
 }

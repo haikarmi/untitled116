@@ -5,20 +5,19 @@ error
 error
 [1121] Haifa 60000 
 
-[7766] Metulla 2500 
+[2232] Bat-Yam 20000 
 
-[7887] Bat-Yam 2000 
+[9444] Eilat 30000 
 
 Ben-Shlomo
 Sharon
 Shimoni
-[7766] Metulla 2500 
+[2232] Bat-Yam 20000 
 
 error
-yes the id city is linked to the city on the map
-no the name not in map
 Sharon
+yes the id city is linked to the city on the map
+No, the name is not in the map
 Shimoni
-empty
 Not available
  the project closed 
